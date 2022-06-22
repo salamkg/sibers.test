@@ -1,0 +1,15 @@
+{
+    "name": "salam/sibers.test",
+    "autoload": {
+        "psr-4": {
+            "app\\": "./"
+        }
+    },
+    "authors": [
+        {
+            "name": "Salamat",
+            "email": "salam.kg@gmail.com"
+        }
+    ],
+    "require": {}
+}
