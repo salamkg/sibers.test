@@ -1,3 +1,4 @@
+<?php session_start();?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -9,21 +10,26 @@
   <body>
 
     <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg bg-light">
+  <nav class="navbar navbar-expand-lg bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <a class="navbar-brand" href="/">Dashboard</a>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">Home</a>
+          <a class="nav-link active" aria-current="page" href="">Something</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/contact">Contact</a>
+          <a class="nav-link" href="">Something</a>
         </li>
       </ul>
+      <?php if($_SESSION['admin'] === 1) : ?>
+        <span class="ml-auto mb-2 mb-lg-0">Welcome
+          <a href="/profile">{User}</a>
+        </span>
+        <img style="width: 50px; height: 50px; border-radius: 50%;"
+        src="https://png.pngtree.com/png-vector/20191116/ourlarge/pngtree-businessman-officer-icon-avatar-vector-download-png-image_1991051.jpg" alt="">
+       
+      <?php else :?>
       <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/login">Login</a>
@@ -32,25 +38,12 @@
           <a class="nav-link" href="/register">Register</a>
         </li>
       </ul>
+      <?php endif ?>
     </div>
   </div>
 </nav>
 
 <div class="container">
-    <!-- FLASH_MESSAGES -->
-    
-      <?php
-
-use app\core\Application;
-
- session_start(); ?>
-        <div class="alert alert-success">
-          <?php if (Application::$app->session->getFlash('success')) {
-            echo Application::$app->session->getFlash('success');
-          } ?>
-          <span>x</span>
-        </div>
-
     <!-- CONTENT HERE -->
     {{content}}
 </div>
