@@ -8,13 +8,8 @@ use app\core\Application;
 
 $app = new Application(dirname(__DIR__));
 
-// App routes
-// $app->router->get('/', function() {
-//     echo 'Hello';
-// });
 $app->router->get('/', [AppController::class, 'home']);
-$app->router->get('/contact', [AppController::class, 'contact']);
-$app->router->post('/contact', [AppController::class, 'handleContact']);
+$app->router->get('/about', [AppController::class, 'about']);
 
 // User routes
 $app->router->get('/admin', [UserController::class, 'dashboard']);

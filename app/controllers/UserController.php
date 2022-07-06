@@ -32,7 +32,6 @@ class UserController extends Controller {
         if ($request->isPost()) {
             return 'Handle submitted data';
         }
-        // $_SESSION['admin'] = 1;
         if ($_SESSION['admin'] === 1) {
             header('Location: /admin');
         }
@@ -54,7 +53,6 @@ class UserController extends Controller {
                 Application::$app->response->redirect('/admin');
                 exit();
             }
-            // Application::$app->session->setFlash('success', 'User successfully created');
             return $this->render('register', [
                 'user' => $user
             ]);

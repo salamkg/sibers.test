@@ -26,7 +26,6 @@ class AppController extends Controller{
     public function handleContact(Request $request)
     {
         $body = $request->getBody();
-        var_dump($body);
         return 'handleContact method';
     }
 }

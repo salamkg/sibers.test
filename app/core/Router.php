@@ -34,13 +34,12 @@ class Router {
 
         if ($callback === false) {
             $this->response->setStatusCode(404);
-            return $this->render("404");
+            return $this->render('404');
         }
         if (is_string($callback)) {
             return $this->render($callback);
         }
         if (is_array($callback)) {
-            // $callback[0] = new $callback[0]();
             Application::$app->controller = new $callback[0]();
             $callback[0] = Application::$app->controller;
         }
@@ -65,7 +64,6 @@ class Router {
         $layout = Application::$app->controller->layout;
         ob_start();
         include_once __DIR__."/../views/layouts/$layout.php";
-        // include_once Application::$ROOT_DIR."/views/layouts/$layout.php";
         return ob_get_clean();
     }
 
@@ -75,7 +73,6 @@ class Router {
             $$key = $value;
         }
         ob_start();
-        // include_once Application::$ROOT_DIR."/views/$view.php";
         include_once __DIR__."/../views/$view.php";
         return ob_get_clean();
     }
