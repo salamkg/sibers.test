@@ -23,7 +23,7 @@
                 <td><?= $user['gender'] ?></td>
                 <td><?= $user['birthday'] ?></td>
                 <td>
-                  <a href="/admin/edit?id=<?= $user['id']?>"><span class="badge text-bg-warning">Edit</span></a>
+                  <a href="/admin/profile/<?= $user['id']?>"><span class="badge text-bg-warning">Edit</span></a>
                   <a href="/admin/delete?id=<?= $user['id']?>"><span class="badge text-bg-danger">Delete</span></a>
                 </td>
               </tr>

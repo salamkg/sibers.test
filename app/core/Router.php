@@ -26,15 +26,61 @@ class Router {
         $this->routes['post'][$path] = $callback;
     }
 
+    public function getCallback()
+    {
+        $method = $this->request->getMethod();
+        $path = $this->request->getPath();
+        // trim slashes
+        $path = trim($path, '/');
+
+        $routes = $this->routes[$method] ?? [];
+
+        $routeParams = false;
+
+        foreach($routes as $route => $callback) {
+            $route = trim($route, '/');
+            $routeNames = [];
+
+            if (!$route) {
+                continue;
+            }
+
+            if (preg_match_all('/\{(\w+)(:[^}]+)?}/', $route, $matches)) {
+                $routeNames = $matches[1];
+            }
+
+            //Convert route into regex
+            $routeRegex = "@^" . preg_replace_callback('/\{\w+(:([^}]+))?}/', fn($m) => isset($m[2]) ? "({$m[2]})" : '(\w+)', $route) . "$@";
+
+            if (preg_match_all($routeRegex, $path, $valueMatches)) {
+                
+                $values = [];
+                for($i = 1; $i < count($valueMatches); $i++) {
+                    $values[] = $valueMatches[$i][0];
+                }
+                $routeParams = array_combine($routeNames, $values);
+
+                $this->request->setRouteParams($routeParams);
+
+                return $callback;
+            }
+        }
+        return false;
+    }
+
     public function resolve()
     {
         $path = $this->request->getPath();
         $method = $this->request->getMethod();
         $callback = $this->routes[$method][$path] ?? false;
 
-        if ($callback === false) {
-            $this->response->setStatusCode(404);
-            return $this->render('404');
+        if (!$callback) {
+            $callback = $this->getCallback();
+
+            if ($callback === false) {
+                $this->response->setStatusCode(404);
+                return $this->render('404');
+            }
         }
         if (is_string($callback)) {
             return $this->render($callback);

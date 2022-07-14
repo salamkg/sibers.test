@@ -4,6 +4,7 @@ namespace app\core;
 
 class Request {
 
+    private array $routeParams = [];
     public function getPath()
     {
         $path = $_SERVER['REQUEST_URI'] ?? '/';
@@ -45,5 +46,11 @@ class Request {
         }
 
         return $body;
+    }
+
+    public function setRouteParams($params)
+    {
+        $this->routeParams = $params;
+        return $this;
     }
 }
